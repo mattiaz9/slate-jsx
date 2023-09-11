@@ -16,6 +16,7 @@ module.exports = {
     "@vercel/style-guide/eslint/node",
     "@vercel/style-guide/eslint/typescript",
     "@vercel/style-guide/eslint/browser",
+    "@vercel/style-guide/eslint/react",
   ].map(require.resolve),
   parserOptions: {
     project,
@@ -31,23 +32,10 @@ module.exports = {
     },
   },
   rules: {
+    "import/no-default-export": "off",
     "import/order": "off",
-    "no-unused-vars": "off",
-    "import/no-cycle": "off",
-    "no-console":
-      process.env.NODE_ENV === "production"
-        ? ["error", { allow: ["info", "warn", "error", "debug", "table"] }]
-        : "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-redundant-type-constituents": "off",
+    "react/jsx-sort-props": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/naming-convention": "off",
-    "@typescript-eslint/consistent-type-definitions": "off",
-    "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/no-unsafe-return": "off",
-    "@typescript-eslint/no-unsafe-member-access": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off",
-    "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unsafe-call": "off",
   },
   ignorePatterns: ["node_modules/", "dist/"],

@@ -1,0 +1,24 @@
+{
+  "name": "slate-jsx",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts-resolve --minify --clean --sourcemap --dts",
+    "dev": "tsup src/index.ts --format esm --dts-resolve --clean --watch --sourcemap --dts",
+    "lint": "eslint --ext .ts,.tsx src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "slate": "^0.94.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.21",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "tsup": "7.2.0"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "printWidth": 100,
+  "semi": false,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "importOrder": [
+    "^react",
+    "^solid-js",
+    "^vue",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^[./]",
+    "^@/",
+    "",
+    "<TYPES>",
+    "<TYPES>^[./]",
+    "<TYPES>^@/"
+  ],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"]
+}

@@ -1,0 +1,12 @@
+.editor {
+  text-align: left;
+  padding: 8px;
+  padding: 2cm;
+  width: 21cm;
+  min-height: 29.7cm;
+  background-color: hsl(0 0% 50% / 0.1);
+}
+
+.editor p {
+  margin-block: unset;
+}

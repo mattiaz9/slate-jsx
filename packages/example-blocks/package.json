@@ -1,0 +1,24 @@
+{
+  "name": "example-blocks",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "src/*"
+  ],
+  "exports": {
+    ".": null,
+    "./blocks": "./src/blocks/index.tsx",
+    "./leaf": "./src/leaf.tsx"
+  },
+  "dependencies": {
+    "slate": "^0.94.1",
+    "slate-jsx": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.21",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*"
+  }
+}
