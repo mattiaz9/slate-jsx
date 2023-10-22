@@ -13,11 +13,11 @@
     "./leaf": "./src/leaf.tsx"
   },
   "dependencies": {
-    "slate": "^0.94.1",
+    "slate": "^0.100.0",
     "slate-jsx": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "18.2.21",
+    "@types/react": "18.2.31",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*"
   }

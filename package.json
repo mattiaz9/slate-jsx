@@ -1,19 +1,20 @@
 {
-  "private": true,
+  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "publish-packages": "turbo run build --filter=slate-jsx && changeset version && changeset publish",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "4.1.0",
-    "eslint": "^8.47.0",
-    "prettier": "^3.0.2",
+    "@changesets/cli": "2.26.2",
+    "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+    "eslint": "^8.52.0",
+    "prettier": "^3.0.3",
     "tsconfig": "workspace:*",
-    "turbo": "latest",
+    "turbo": "^1.10.16",
     "typescript": "5.2.2"
   },
-  "packageManager": "pnpm@8.6.10",
-  "name": "slate-jsx"
+  "packageManager": "pnpm@8.6.10"
 }
