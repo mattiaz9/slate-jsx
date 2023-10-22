@@ -37,6 +37,7 @@ module.exports = {
     "react/jsx-sort-props": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unsafe-call": "off",
+    "eslint-comments/require-description": "off",
   },
   ignorePatterns: ["node_modules/", "dist/"],
 }

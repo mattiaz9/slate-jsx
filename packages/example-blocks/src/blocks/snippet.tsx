@@ -1,9 +1,9 @@
+import { SlateBlock } from "@mattiaz9/slate-jsx"
 import { Editor, Element, Path, Range } from "slate"
-import { SlateBlock } from "slate-jsx"
 
 import { ParagraphBlock } from "./paragraph"
 
-import type { inferBlockElement, inferBlockType, RenderElementProps } from "slate-jsx"
+import type { inferBlockElement, inferBlockType, RenderElementProps } from "@mattiaz9/slate-jsx"
 
 export type SnippetType = inferBlockType<SnippetBlock>
 export type SnippetElement = inferBlockElement<SnippetBlock>

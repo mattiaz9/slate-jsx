@@ -7,6 +7,7 @@
 <script setup lang="tsx">
 import { h, hydrate, onMounted, ref } from "vue"
 import { renderToString } from "vue/server-renderer"
+import { initSlate } from "@mattiaz9/slate-jsx"
 import {
   HeadingBlock,
   ListBlock,
@@ -19,7 +20,6 @@ import {
   TableRowBlock,
 } from "example-blocks/blocks"
 import { Leaf } from "example-blocks/leaf"
-import { initSlate } from "slate-jsx"
 
 const slate = ref<HTMLDivElement | null>(null)
 

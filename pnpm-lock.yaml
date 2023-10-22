@@ -32,15 +32,15 @@ importers:
 
   apps/example-solid:
     dependencies:
+      '@mattiaz9/slate-jsx':
+        specifier: workspace:slate-jsx
+        version: link:../../packages/slate-jsx
       example-blocks:
         specifier: workspace:*
         version: link:../../packages/example-blocks
       slate:
         specifier: ^0.100.0
         version: 0.100.0
-      slate-jsx:
-        specifier: workspace:*
-        version: link:../../packages/slate-jsx
       solid-js:
         specifier: ^1.8.3
         version: 1.8.3
@@ -63,15 +63,15 @@ importers:
 
   apps/example-vue:
     dependencies:
+      '@mattiaz9/slate-jsx':
+        specifier: workspace:slate-jsx
+        version: link:../../packages/slate-jsx
       example-blocks:
         specifier: workspace:*
         version: link:../../packages/example-blocks
       slate:
         specifier: ^0.100.0
         version: 0.100.0
-      slate-jsx:
-        specifier: workspace:*
-        version: link:../../packages/slate-jsx
       vue:
         specifier: ^3.3.6
         version: 3.3.6(typescript@5.2.2)
@@ -124,12 +124,12 @@ importers:
 
   packages/example-blocks:
     dependencies:
+      '@mattiaz9/slate-jsx':
+        specifier: workspace:slate-jsx
+        version: link:../slate-jsx
       slate:
         specifier: ^0.100.0
         version: 0.100.0
-      slate-jsx:
-        specifier: workspace:*
-        version: link:../slate-jsx
     devDependencies:
       '@types/react':
         specifier: 18.2.31

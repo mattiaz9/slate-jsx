@@ -1,9 +1,9 @@
+import { SlateBlock } from "@mattiaz9/slate-jsx"
 import { Element } from "slate"
-import { SlateBlock } from "slate-jsx"
 
 import { ListItemBlock } from "./list-item"
 
-import type { inferBlockElement, inferBlockType, RenderElementProps } from "slate-jsx"
+import type { inferBlockElement, inferBlockType, RenderElementProps } from "@mattiaz9/slate-jsx"
 
 export type ListType = inferBlockType<ListBlock<"ol" | "ul">>
 export type ListElement = inferBlockElement<ListBlock<"ol" | "ul">>

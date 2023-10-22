@@ -1,6 +1,7 @@
 import { getOwner, onMount } from "solid-js"
 import h from "solid-js/h"
 import { hydrate } from "solid-js/web"
+import { initSlate } from "@mattiaz9/slate-jsx"
 import {
   HeadingBlock,
   ListBlock,
@@ -13,7 +14,6 @@ import {
   TableRowBlock,
 } from "example-blocks/blocks"
 import { Leaf } from "example-blocks/leaf"
-import { initSlate } from "slate-jsx"
 
 import "./app.css"
 
@@ -233,10 +233,10 @@ export default function App() {
         hydrate(() => input, container, {
           owner: getOwner(),
         }),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
       h,
     })
   })
 
-  return <div id="editor" class="editor" ref={slate} />
+  return <div id="editor" className="editor" ref={slate} />
 }

@@ -1,7 +1,7 @@
+import { SlateLeaf } from "@mattiaz9/slate-jsx"
 import { Text } from "slate"
-import { SlateLeaf } from "slate-jsx"
 
-import type { inferLeafElement, RenderLeafProps } from "slate-jsx"
+import type { inferLeafElement, RenderLeafProps } from "@mattiaz9/slate-jsx"
 
 export type LeafElement = inferLeafElement<Leaf>
 

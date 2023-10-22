@@ -1,10 +1,10 @@
+import { SlateBlock } from "@mattiaz9/slate-jsx"
 import { Element } from "slate"
-import { SlateBlock } from "slate-jsx"
 
 import { ParagraphBlock } from "./paragraph"
 import { TableRowBlock } from "./table-row"
 
-import type { inferBlockElement, inferBlockType, RenderElementProps } from "slate-jsx"
+import type { inferBlockElement, inferBlockType, RenderElementProps } from "@mattiaz9/slate-jsx"
 
 export type TableType = inferBlockType<TableBlock>
 export type TableElement = inferBlockElement<TableBlock>

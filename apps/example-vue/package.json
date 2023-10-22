@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mattiaz9/slate-jsx": "workspace:slate-jsx",
     "example-blocks": "workspace:*",
     "slate": "^0.100.0",
-    "slate-jsx": "workspace:*",
     "vue": "^3.3.6"
   },
   "devDependencies": {

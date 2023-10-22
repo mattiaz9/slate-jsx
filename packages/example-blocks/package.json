@@ -13,8 +13,8 @@
     "./leaf": "./src/leaf.tsx"
   },
   "dependencies": {
-    "slate": "^0.100.0",
-    "slate-jsx": "workspace:*"
+    "@mattiaz9/slate-jsx": "workspace:slate-jsx",
+    "slate": "^0.100.0"
   },
   "devDependencies": {
     "@types/react": "18.2.31",

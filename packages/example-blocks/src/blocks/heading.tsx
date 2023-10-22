@@ -1,10 +1,10 @@
+import { SlateBlock } from "@mattiaz9/slate-jsx"
 import { Element } from "slate"
-import { SlateBlock } from "slate-jsx"
 
 import { Leaf } from "../leaf"
 import { ParagraphBlock } from "./paragraph"
 
-import type { inferBlockElement, inferBlockType, RenderElementProps } from "slate-jsx"
+import type { inferBlockElement, inferBlockType, RenderElementProps } from "@mattiaz9/slate-jsx"
 
 export type HeadingType = inferBlockType<HeadingBlock<"h1" | "h2" | "h3" | "h4" | "h5" | "h6">>
 export type HeadingElement = inferBlockElement<

@@ -1,9 +1,9 @@
+import { SlateBlock } from "@mattiaz9/slate-jsx"
 import { Element } from "slate"
-import { SlateBlock } from "slate-jsx"
 
 import { Leaf } from "../leaf"
 
-import type { inferBlockElement, inferBlockType, RenderElementProps } from "slate-jsx"
+import type { inferBlockElement, inferBlockType, RenderElementProps } from "@mattiaz9/slate-jsx"
 
 export type QuoteType = inferBlockType<QuoteBlock>
 export type QuoteElement = inferBlockElement<QuoteBlock>
