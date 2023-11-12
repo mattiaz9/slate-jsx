@@ -71,7 +71,8 @@ export function createEditor<
   }
   editor.dispatchCommand = (trigger: BlockBehaviourTrigger, next: () => void) => {
     if (isDispatching) {
-      return next()
+      next()
+      return
     }
 
     isDispatching = true
@@ -196,10 +197,8 @@ export function createEditor<
           }
           if (remove) {
             if (children.length === 1) {
-              console.log("remove block", node)
               Transforms.removeNodes(editor, { at: path })
             } else {
-              console.log("remove", child, "from", node)
               Transforms.removeNodes(editor, { at: [...path, i] })
               children.splice(i, 1)
             }
@@ -208,7 +207,7 @@ export function createEditor<
       }
     }
 
-    return normalizeNode(entry, opts)
+    normalizeNode(entry, opts)
   }
 
   return editor

@@ -36,16 +36,11 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
   editor.children = defaultValue
 
   async function renderEditor() {
-    console.log("1A")
     const tree = renderTree(h, editor, editor.children as SlateDescendant[], [], leaf)
-    console.log("2")
     const htmlElements = await Promise.all(tree.map(el => renderToString(el)))
-    console.log("3")
     element.innerHTML = htmlElements.join("")
 
-    console.log("4")
     hydrate(tree, element)
-    console.log("55")
   }
 
   editor.onChange = op => {

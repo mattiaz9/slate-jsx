@@ -40,6 +40,7 @@ module.exports = {
       plugins: ["@typescript-eslint", "prettier"],
       extends: ["plugin:vue/vue3-recommended", "custom"],
       rules: {
+        "eslint-comments/require-description": "off",
         // Require empty line between certain statements
         "padding-line-between-statements": [
           "warn",
