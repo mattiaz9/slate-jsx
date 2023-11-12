@@ -1,10 +1,18 @@
 {
   "name": "@mattiaz9/slate-jsx",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "module": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts-resolve --minify --clean --sourcemap --dts",
     "dev": "tsup src/index.ts --format esm --dts-resolve --clean --watch --sourcemap --dts",
