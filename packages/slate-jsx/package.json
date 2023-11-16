@@ -3,19 +3,14 @@
   "version": "0.1.2",
   "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": {
-      "module": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts-resolve --minify --clean --sourcemap --dts",
-    "dev": "tsup src/index.ts --format esm --dts-resolve --clean --watch --sourcemap --dts",
+    "dev": "rm -rf dist && tsup src/index.ts --format esm --dts-resolve --clean --watch --sourcemap --dts",
     "lint": "eslint --ext .ts,.tsx src"
   },
   "dependencies": {

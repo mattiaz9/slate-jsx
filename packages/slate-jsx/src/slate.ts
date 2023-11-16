@@ -36,9 +36,13 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
   editor.children = defaultValue
 
   async function renderEditor() {
-    const tree = renderTree(h, editor, editor.children as SlateDescendant[], [], leaf)
-    const htmlElements = await Promise.all(tree.map(el => renderToString(el)))
-    element.innerHTML = htmlElements.join("")
+    const tree = h("div", renderTree(editor, editor.children as SlateDescendant[], [], leaf))
+    const html = await renderToString(tree)
+    element.innerHTML = html
+
+    // const tree = renderTree(editor, editor.children as SlateDescendant[], [], leaf)
+    // const htmlElements = await Promise.all(tree.map(el => renderToString(el)))
+    // element.innerHTML = htmlElements.join("")
 
     hydrate(tree, element)
   }
@@ -224,20 +228,18 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
 }
 
 function renderTree(
-  h: EditorSetup<any, any>["h"],
   editor: ReturnType<typeof createEditor>,
   elements: SlateDescendant[],
   path: Path,
   leaf: SlateLeaf<any>
 ): (JSX.Element | null)[] {
   const children = elements.map((element, index) =>
-    renderElement(h, editor, element, [...path, index], leaf)
+    renderElement(editor, element, [...path, index], leaf)
   )
   return children
 }
 
 function renderElement(
-  h: EditorSetup<any, any>["h"],
   editor: ReturnType<typeof createEditor>,
   element: SlateDescendant,
   path: Path,
@@ -259,7 +261,7 @@ function renderElement(
         "data-slate-path": JSON.stringify(path),
         contenteditable: editor.isVoid(element) ? false : undefined,
       },
-      children: renderTree(h, editor, element.children, path, leaf) as any,
+      children: renderTree(editor, element.children, path, leaf) as any,
     })
   }
   return leaf.render({
