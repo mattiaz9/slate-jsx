@@ -1,7 +1,7 @@
 import { SlateBlock } from "@mattiaz9/slate-jsx"
 import { Element } from "slate"
 
-import { Leaf } from "../leaf"
+import { ParagraphBlock } from "./paragraph"
 
 import type { inferBlockElement, inferBlockType, RenderElementProps } from "@mattiaz9/slate-jsx"
 
@@ -17,9 +17,9 @@ export class QuoteBlock extends SlateBlock<"blockquote", {}> {
     super("blockquote", {
       emptyBlock: {
         type: "blockquote",
-        children: [{ text: "", italic: true }],
+        children: [{ type: "p", children: [{ text: "", italic: true }] }],
       },
-      allowedChildren: [Leaf],
+      allowedChildren: [ParagraphBlock.withId("p")],
     })
   }
 

@@ -16,7 +16,6 @@ module.exports = {
     "@vercel/style-guide/eslint/node",
     "@vercel/style-guide/eslint/typescript",
     "@vercel/style-guide/eslint/browser",
-    "@vercel/style-guide/eslint/react",
   ].map(require.resolve),
   parserOptions: {
     project,
@@ -37,6 +36,9 @@ module.exports = {
     "react/jsx-sort-props": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
     "eslint-comments/require-description": "off",
   },
   ignorePatterns: ["node_modules/", "dist/"],

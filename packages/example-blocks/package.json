@@ -10,7 +10,8 @@
   "exports": {
     ".": null,
     "./blocks": "./src/blocks/index.tsx",
-    "./leaf": "./src/leaf.tsx"
+    "./leaf": "./src/leaf.tsx",
+    "./placeholder": "./src/placeholder.ts"
   },
   "dependencies": {
     "@mattiaz9/slate-jsx": "workspace:slate-jsx",

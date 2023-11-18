@@ -40,31 +40,40 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
     const html = await renderToString(tree)
     element.innerHTML = html
 
-    // const tree = renderTree(editor, editor.children as SlateDescendant[], [], leaf)
-    // const htmlElements = await Promise.all(tree.map(el => renderToString(el)))
-    // element.innerHTML = htmlElements.join("")
-
     hydrate(tree, element)
+  }
+
+  async function rehydrate(path: Path) {
+    const nodeEl = document.querySelector(`[data-slate-path="${JSON.stringify(path)}"]`)
+    if (!nodeEl) return
+
+    const node = Editor.node(editor, path)[0]
+    nodeEl.outerHTML = await renderToString(renderElement(editor, node, path, leaf))
+
+    const tree = h("div", renderTree(editor, editor.children as SlateDescendant[], [], leaf))
+    hydrate(tree, element)
+  }
+
+  function restoreCursor() {
+    if (editor.selection) {
+      const range = selectionToDOMRange(editor)
+      const docSelection = document.getSelection()
+      if (range && docSelection) {
+        docSelection.removeAllRanges()
+        docSelection.addRange(range)
+      }
+    }
   }
 
   editor.onChange = op => {
     if (!op?.operation) return
     if (op.operation.type === "set_selection") return
 
-    renderEditor()
-      .then(() => {
-        if (editor.selection) {
-          const range = selectionToDOMRange(editor)
-          const docSelection = document.getSelection()
-          if (range && docSelection) {
-            docSelection.removeAllRanges()
-            docSelection.addRange(range)
-          }
-        }
-      })
-      .catch(err => {
-        console.error(err)
-      })
+    if (op.operation.type === "insert_text") {
+      rehydrate(op.operation.path).then(restoreCursor).catch(console.error)
+    } else {
+      renderEditor().then(restoreCursor).catch(console.error)
+    }
   }
 
   element.contentEditable = "true"
