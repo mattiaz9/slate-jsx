@@ -4,10 +4,10 @@ import { copyFragment, cutFragment, pasteFragment } from "./clipboard"
 import { getCurrentRange, selectionToDOMRange } from "./dom"
 import { createEditor } from "./editor"
 
-import type { Path, SlateDescendant } from "slate"
+import type { Path } from "slate"
 import type { SlateBlock } from "./block"
 import type { SlateLeaf } from "./leaf"
-import type { inferBlocksDescendant } from "./types"
+import type { inferBlocksDescendant, SlateDescendant } from "./types"
 
 export type EditorSetup<
   TBlocks extends readonly SlateBlock<any, any>[],

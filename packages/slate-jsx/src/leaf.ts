@@ -1,5 +1,11 @@
-import type { Path, SlateText } from "slate"
-import type { BlockEditor, inferLeafElement, inferLeafProps, LeafConstructor } from "./types"
+import type { Path } from "slate"
+import type {
+  BlockEditor,
+  inferLeafElement,
+  inferLeafProps,
+  LeafConstructor,
+  SlateText,
+} from "./types"
 
 export interface RenderLeafProps<T extends SlateLeaf<any>> {
   editor: BlockEditor<readonly any[], any>

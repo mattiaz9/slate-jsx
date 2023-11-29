@@ -1,4 +1,4 @@
-import type { NodeEntry, Path, SlateElement } from "slate"
+import type { NodeEntry, Path } from "slate"
 import type { SlateLeaf } from "./leaf"
 import type {
   BlockConstructor,
@@ -7,6 +7,7 @@ import type {
   inferBlockProps,
   inferBlockType,
   Prettify,
+  SlateElement,
 } from "./types"
 
 export interface SlateBlockWithId<Id extends string> extends SlateBlock<Id, any> {

@@ -1,5 +1,3 @@
-import "../slate-jsx.d.ts"
-
 export * from "./block"
 export * from "./caret-position"
 export * from "./leaf"

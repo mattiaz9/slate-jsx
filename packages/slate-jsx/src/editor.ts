@@ -3,9 +3,9 @@ import { createEditor as createSlateEditor, Editor, Element, Path, Text, Transfo
 import { SlateBlock } from "./block"
 import { SlateLeaf } from "./leaf"
 
-import type { Node, NodeEntry, SlateElement } from "slate"
+import type { Node, NodeEntry } from "slate"
 import type { BlockBehaviour, BlockBehaviourFuncContext, BlockBehaviourTrigger } from "./block"
-import type { BlockEditor } from "./types"
+import type { BlockEditor, SlateElement } from "./types"
 
 export function createEditor<
   const T extends readonly SlateBlock<any, any>[],

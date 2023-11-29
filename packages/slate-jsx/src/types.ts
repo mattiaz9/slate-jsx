@@ -1,10 +1,23 @@
-import type { BaseEditor, BaseElement, BaseText, NodeEntry, SlateElement } from "slate"
+import type { BaseEditor, BaseElement, BaseText, NodeEntry } from "slate"
 import type { BlockBehaviour, BlockBehaviourTrigger, SlateBlock } from "./block"
 import type { SlateLeaf } from "./leaf"
 
 export type Prettify<T> = {
   [K in keyof T]: T[K]
 } & {}
+
+export interface ElementBase {
+  type: string
+  children: SlateDescendant[]
+}
+
+export type SlateDescendant = SlateElement<string, any> | SlateText
+export type SlateElement<T extends string, Props = Record<string, never>> = ElementBase & {
+  type: T
+} & Props
+export type SlateText<Props = Record<string, never>> = {
+  text: string
+} & Props
 
 export type BlockConstructor<T, Id extends string> = new (id: Id) => T
 export type LeafConstructor<T> = new () => T

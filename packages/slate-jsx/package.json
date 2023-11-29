@@ -1,6 +1,6 @@
 {
   "name": "@mattiaz9/slate-jsx",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "type": "module",
   "module": "dist/index.js",
