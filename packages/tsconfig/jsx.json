@@ -4,8 +4,8 @@
   "extends": "./base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "lib": ["ES2016", "DOM", "DOM.Iterable"],
+    "lib": ["ES2019", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "target": "es6"
+    "target": "es2019"
   }
 }

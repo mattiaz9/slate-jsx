@@ -28,10 +28,34 @@ export class ListItemBlock extends SlateBlock<"li", { level: number }> {
           trigger: ["enter", "backspace"],
           action: "split",
           withBlock: new ParagraphBlock(),
-          when: ({ editor, element }) => {
+          when: ({ editor, element, tree }) => {
             if (!editor.selection || !Range.isCollapsed(editor.selection)) return false
+            const isOnlyChild =
+              tree.flatMap(([entry]) =>
+                Element.isElement(entry) ? entry.children.filter(c => ListItemBlock.assert(c)) : []
+              ).length === 1
             // check if the current list item is empty
-            return element.children.length === 1 && element.children[0].text === ""
+            return !isOnlyChild && element.children.length === 1 && element.children[0].text === ""
+          },
+          target: ({ tree }) => {
+            // the root list block
+            const reversedTree = [...tree].reverse()
+            const path = reversedTree.find(([entry]) => ListBlock.assert(entry))?.[1]
+            return path
+          },
+        },
+        {
+          trigger: ["enter", "backspace"],
+          action: "replace",
+          withBlock: new ParagraphBlock(),
+          when: ({ editor, element, tree }) => {
+            if (!editor.selection || !Range.isCollapsed(editor.selection)) return false
+            const isOnlyChild =
+              tree.flatMap(([entry]) =>
+                ListBlock.assert(entry) ? entry.children.filter(c => ListItemBlock.assert(c)) : []
+              ).length === 1
+            // check if the current list item is empty
+            return isOnlyChild && element.children.length === 1 && element.children[0].text === ""
           },
           target: ({ tree }) => {
             // the root list block

@@ -17,10 +17,14 @@ export type BlockEditor<T extends readonly SlateBlock<any, any>[], L extends Sla
   children: inferBlocksDescendant<T, L>[]
   indent: () => void
   outdent: () => void
-  executeElementCommand: (
+  canExecuteElementCommand: (
     entry: NodeEntry<SlateElement<string>>,
     command: BlockBehaviour<any>
   ) => boolean
+  executeElementCommand: (
+    entry: NodeEntry<SlateElement<string>>,
+    command: BlockBehaviour<any>
+  ) => void
   dispatchCommand: (trigger: BlockBehaviourTrigger, next: () => void) => void
 }
 

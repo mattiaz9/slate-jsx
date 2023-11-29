@@ -15,7 +15,9 @@ import { initialValue } from "example-blocks/placeholder"
 const slate = ref<HTMLDivElement | null>(null)
 
 onMounted(() => {
-  const editor = initSlate(slate.value!, {
+  if (!slate.value) return
+
+  const editor = initSlate(slate.value, {
     defaultValue: initialValue,
     blocks,
     leaf: new Leaf(),
@@ -23,6 +25,8 @@ onMounted(() => {
     hydrate: hydrate,
     h,
   })
+
+  slate.value.focus()
 })
 </script>
 

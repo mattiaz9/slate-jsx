@@ -173,6 +173,7 @@ Actions:
 - `stop`: stop the default behaviour
 - `split`: split the target block
 - `replace`: replace the target block
+- `append`: append a new block after the target block
 - `move`: move the target block
 - execute a custom function
 

@@ -48,7 +48,7 @@ export function createEditor<
     }
     return isVoid(element)
   }
-  editor.executeElementCommand = (
+  editor.canExecuteElementCommand = (
     entry: NodeEntry<SlateElement<string>>,
     command: BlockBehaviour<any>
   ) => {
@@ -62,12 +62,21 @@ export function createEditor<
     const ctx = { editor, element, path, tree } satisfies BlockBehaviourFuncContext<any>
     const shouldRun = command.when?.(ctx) ?? true
 
-    if (shouldRun) {
-      executeCommand(command, ctx)
-      return true
-    }
-
-    return false
+    return shouldRun
+  }
+  editor.executeElementCommand = (
+    entry: NodeEntry<SlateElement<string>>,
+    command: BlockBehaviour<any>
+  ) => {
+    const [element, path] = entry
+    const tree = Array.from(
+      Editor.levels(editor, {
+        at: Path.parent(path),
+        reverse: true,
+      })
+    )
+    const ctx = { editor, element, path, tree } satisfies BlockBehaviourFuncContext<any>
+    executeCommand(command, ctx)
   }
   editor.dispatchCommand = (trigger: BlockBehaviourTrigger, next: () => void) => {
     if (isDispatching) {
@@ -83,7 +92,7 @@ export function createEditor<
 
     if (selection) {
       const entries = Array.from(
-        Editor.nodes(editor, {
+        Editor.nodes<SlateElement<any>>(editor, {
           match: n => {
             return isElement(n) && blocks.some(b => b.id === n.type && b.options.behaviours?.length)
           },
@@ -96,15 +105,14 @@ export function createEditor<
 
         if (isElement(element)) {
           const block = editor.blocks.find(b => b.id === element.type)
-          const command = block?.options.behaviours?.find(b =>
-            typeof b.trigger === "string" ? b.trigger === trigger : b.trigger.includes(trigger)
-          )
-          if (command) {
-            const didRun = editor.executeElementCommand(
-              entry as NodeEntry<SlateElement<any>>,
-              command
-            )
-            hasSomeRuns ||= didRun
+          const commands = (
+            block?.options.behaviours?.filter(b =>
+              typeof b.trigger === "string" ? b.trigger === trigger : b.trigger.includes(trigger)
+            ) ?? []
+          ).filter(c => editor.canExecuteElementCommand(entry, c))
+          for (const command of commands) {
+            editor.executeElementCommand(entry, command)
+            hasSomeRuns = true
           }
         }
       }
@@ -227,19 +235,22 @@ function executeCommand(command: BlockBehaviour<any>, ctx: BlockBehaviourFuncCon
         ?.options.allowedChildren?.find((b: any) => b.prototype instanceof SlateBlock)
       const withElement =
         command.withBlock?.emptyBlock ?? (FallbackBlock ? new FallbackBlock("_").emptyBlock : null)
-
-      const parent = Editor.parent(editor, path)
-      const isLastChild = parent[0].children.length - 1 === path[path.length - 1]
       const nextPath = Path.next(targetPath)
 
       Transforms.removeNodes(editor, { at: path })
 
       Editor.withoutNormalizing(editor, () => {
-        let nextSplitPath = isLastChild ? Path.next(Path.parent(path)) : path
+        let nextSplitPath = path
         while (
           Path.isDescendant(nextSplitPath, Path.parent(targetPath)) &&
           !Path.equals(nextSplitPath, [])
         ) {
+          const exists = Editor.hasPath(editor, nextSplitPath)
+
+          if (!exists) {
+            break
+          }
+
           Transforms.splitNodes(editor, {
             at: nextSplitPath,
           })
@@ -255,6 +266,17 @@ function executeCommand(command: BlockBehaviour<any>, ctx: BlockBehaviourFuncCon
 
       return
     }
+    case "append": {
+      const targetPath = typeof command.target === "function" ? command.target(ctx) ?? path : path
+      const withBlock = command.withBlock
+
+      if (withBlock) {
+        Transforms.insertNodes(editor, withBlock.emptyBlock, { at: Path.next(targetPath) })
+        Transforms.select(editor, Path.next(targetPath))
+      }
+
+      return
+    }
     case "replace": {
       const targetPath = typeof command.target === "function" ? command.target(ctx) ?? path : path
       const withBlock = command.withBlock
@@ -262,6 +284,7 @@ function executeCommand(command: BlockBehaviour<any>, ctx: BlockBehaviourFuncCon
       if (withBlock) {
         Transforms.insertNodes(editor, withBlock.emptyBlock, { at: Path.next(targetPath) })
         Transforms.select(editor, Path.next(targetPath))
+        Transforms.delete(editor, { at: targetPath })
       }
 
       return

@@ -108,10 +108,11 @@ export type BlockBehaviour<T extends SlateBlock<any, any>> = Prettify<
            *  - `stop`: stop the default behaviour
            *  - `split`: split the target block
            *  - `replace`: replace the target block
+           *  - `append`: append next to target block
            *  - `move`: move the target block
            *  - execute a custom function
            */
-          action: "split" | "replace" | ((ctx: BlockBehaviourFuncContext<T>) => void)
+          action: "split" | "replace" | "append" | ((ctx: BlockBehaviourFuncContext<T>) => void)
         } & BlockBehaviourExecutable<T> & {
             /**
              * The element used in the action.
