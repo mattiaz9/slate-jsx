@@ -38,6 +38,7 @@ module.exports = {
       process.env.NODE_ENV === "production"
         ? ["error", { allow: ["info", "warn", "error", "debug", "table"] }]
         : "off",
+    "no-nested-ternary": "off",
     "eslint-comments/require-description": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-redundant-type-constituents": "off",

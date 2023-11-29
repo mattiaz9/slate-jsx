@@ -21,6 +21,15 @@ export class Leaf extends SlateLeaf<{
   render(props: RenderLeafProps<Leaf>) {
     const style = {
       whiteSpace: "pre",
+      fontWeight: props.leaf.bold ? "bold" : undefined,
+      fontStyle: props.leaf.italic ? "italic" : undefined,
+      textDecoration: props.leaf.underline
+        ? "underline"
+        : props.leaf.strikethrough
+        ? "line-through"
+        : undefined,
+      backgroundColor: props.leaf.code ? "hsl(0 0% 50% / 0.2)" : undefined,
+      borderRadius: props.leaf.code ? "0.2em" : undefined,
     }
     if (props.leaf.bold) {
       return (
@@ -52,14 +61,7 @@ export class Leaf extends SlateLeaf<{
     }
     if (props.leaf.code) {
       return (
-        <code
-          {...props.attributes}
-          style={{
-            ...style,
-            "background-color": "hsl(0 0% 50% / 0.2)",
-            "border-radius": "0.2em",
-          }}
-        >
+        <code {...props.attributes} style={style}>
           {props.children}
         </code>
       )

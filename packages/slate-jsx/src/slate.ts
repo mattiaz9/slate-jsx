@@ -69,7 +69,12 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
     if (!op?.operation) return
     if (op.operation.type === "set_selection") return
 
-    if (op.operation.type === "insert_text") {
+    const isInlineOperation =
+      op.operation.type === "insert_text" ||
+      op.operation.type === "remove_text" ||
+      op.operation.type === "set_node"
+
+    if (isInlineOperation) {
       rehydrate(op.operation.path).then(restoreCursor).catch(console.error)
     } else {
       renderEditor().then(restoreCursor).catch(console.error)
