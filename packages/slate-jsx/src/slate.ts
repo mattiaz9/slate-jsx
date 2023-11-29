@@ -48,10 +48,15 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
     if (!nodeEl) return
 
     const node = Editor.node(editor, path)[0]
-    nodeEl.outerHTML = await renderToString(renderElement(editor, node, path, leaf))
 
-    const tree = h("div", renderTree(editor, editor.children as SlateDescendant[], [], leaf))
-    hydrate(tree, element)
+    const html = await renderToString(renderElement(editor, node, path, leaf))
+
+    if (nodeEl.parentNode) {
+      nodeEl.outerHTML = html
+
+      const tree = h("div", renderTree(editor, editor.children as SlateDescendant[], [], leaf))
+      hydrate(tree, element)
+    }
   }
 
   function restoreCursor() {
