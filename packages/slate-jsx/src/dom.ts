@@ -61,8 +61,12 @@ export function getCurrentRange() {
 export function selectionToDOMRange(editor: BaseEditor) {
   if (!editor.selection) return null
 
-  const anchor = getElementAtPath(editor.selection.anchor.path)
-  const focus = getElementAtPath(editor.selection.focus.path)
+  return slateRangeToDOMRange(editor.selection)
+}
+
+export function slateRangeToDOMRange(range: Range) {
+  const anchor = getElementAtPath(range.anchor.path)
+  const focus = getElementAtPath(range.focus.path)
 
   const anchorNode = Array.from(anchor.childNodes).find(n => n.nodeType === Node.TEXT_NODE)
   const focusNode = Array.from(focus.childNodes).find(n => n.nodeType === Node.TEXT_NODE)
@@ -70,17 +74,17 @@ export function selectionToDOMRange(editor: BaseEditor) {
   if (!anchorNode || !focusNode) return null
 
   const anchorOffset =
-    editor.selection.anchor.offset <= (anchorNode.textContent ?? "").length
-      ? editor.selection.anchor.offset
+    range.anchor.offset <= (anchorNode.textContent ?? "").length
+      ? range.anchor.offset
       : (anchorNode.textContent ?? "").length
   const focusOffset =
-    editor.selection.focus.offset <= (focusNode.textContent ?? "").length
-      ? editor.selection.focus.offset
+    range.focus.offset <= (focusNode.textContent ?? "").length
+      ? range.focus.offset
       : (focusNode.textContent ?? "").length
 
-  const range = document.createRange()
-  range.setStart(anchorNode, anchorOffset)
-  range.setEnd(focusNode, focusOffset)
+  const domRange = document.createRange()
+  domRange.setStart(anchorNode, anchorOffset)
+  domRange.setEnd(focusNode, focusOffset)
 
-  return range
+  return domRange
 }

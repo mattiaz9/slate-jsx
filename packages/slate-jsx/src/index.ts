@@ -1,4 +1,5 @@
 export * from "./block"
+export * from "./dom"
 export * from "./caret-position"
 export * from "./leaf"
 export * from "./editor"
