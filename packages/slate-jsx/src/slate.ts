@@ -45,6 +45,7 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
 
   async function rehydrate(path: Path) {
     const nodeEl = document.querySelector(`[data-slate-path="${JSON.stringify(path)}"]`)
+
     if (!nodeEl) return
 
     const node = Editor.node(editor, path)[0]
@@ -79,7 +80,7 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
       op.operation.type === "remove_text" ||
       op.operation.type === "set_node"
 
-    if (isInlineOperation) {
+    if (isInlineOperation && Editor.hasPath(editor, op.operation.path)) {
       rehydrate(op.operation.path).then(restoreCursor).catch(console.error)
     } else {
       renderEditor().then(restoreCursor).catch(console.error)
