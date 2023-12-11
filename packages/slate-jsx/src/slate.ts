@@ -7,7 +7,7 @@ import { createEditor } from "./editor"
 import type { Path } from "slate"
 import type { SlateBlock } from "./block"
 import type { SlateLeaf } from "./leaf"
-import type { inferBlocksDescendant, SlateDescendant } from "./types"
+import type { inferBlocksDescendant, SlateDescendant, SlateElement } from "./types"
 
 export type EditorSetup<
   TBlocks extends readonly SlateBlock<any, any>[],
@@ -276,6 +276,7 @@ function renderElement(
       path,
       attributes: {
         "data-slate-node": "element",
+        "data-slate-element": (element as SlateElement<any, any>).type,
         "data-slate-void": editor.isVoid(element) ? true : undefined,
         "data-slate-inline": editor.isInline(element) ? true : undefined,
         "data-slate-path": JSON.stringify(path),
