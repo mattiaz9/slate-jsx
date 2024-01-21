@@ -2,9 +2,11 @@ import { Editor, Node, Range, Transforms } from "slate"
 
 import { selectionToDOMRange } from "./dom"
 
+import type { BlockEditor } from "./types"
+
 const SLATE_MIME_TYPE = "application/x-slate-fragment"
 
-export function copyFragment(editor: Editor, data: DataTransfer) {
+export function copyFragment(editor: BlockEditor<any, any>, data: DataTransfer) {
   const { selection } = editor
 
   if (!selection || Range.isCollapsed(selection)) return
@@ -28,7 +30,7 @@ export function copyFragment(editor: Editor, data: DataTransfer) {
   }
 }
 
-export function cutFragment(editor: Editor, data: DataTransfer) {
+export function cutFragment(editor: BlockEditor<any, any>, data: DataTransfer) {
   copyFragment(editor, data)
 
   const { selection } = editor
@@ -45,7 +47,7 @@ export function cutFragment(editor: Editor, data: DataTransfer) {
   }
 }
 
-export function pasteFragment(editor: Editor, data: DataTransfer) {
+export function pasteFragment(editor: BlockEditor<any, any>, data: DataTransfer) {
   const fragment = parseSlateFragment(data)
   if (fragment) {
     editor.insertFragment(fragment)

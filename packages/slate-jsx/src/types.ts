@@ -11,11 +11,11 @@ export interface ElementBase {
   children: SlateDescendant[]
 }
 
-export type SlateDescendant = SlateElement<string, any> | SlateText
+export type SlateDescendant = SlateElement<string> | SlateText
 export type SlateElement<T extends string, Props = Record<string, never>> = ElementBase & {
   type: T
 } & Props
-export type SlateText<Props = Record<string, never>> = {
+export type SlateText<Props = Record<string, unknown>> = {
   text: string
 } & Props
 
@@ -27,9 +27,14 @@ export type BlockEditor<T extends readonly SlateBlock<any, any>[], L extends Sla
   "children"
 > & {
   blocks: T
+  element: HTMLElement
   children: inferBlocksDescendant<T, L>[]
   indent: () => void
   outdent: () => void
+  getElementBlock: (
+    element: SlateElement<string>,
+    nestedTree: SlateElement<any, any>[]
+  ) => SlateBlock<any, any> | undefined
   canExecuteElementCommand: (
     entry: NodeEntry<SlateElement<string>>,
     command: BlockBehaviour<any>

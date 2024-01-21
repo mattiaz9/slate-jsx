@@ -1,7 +1,10 @@
-import type { BaseEditor, Path, Point, Range } from "slate"
+import type { Path, Point, Range } from "slate"
+import type { BlockEditor } from "./types"
 
-export function getElementAtPath(path: Path) {
-  const node = document.querySelector<HTMLElement>(`[data-slate-path='${JSON.stringify(path)}']`)
+export function getElementAtPath(path: Path, element: HTMLElement) {
+  const node = element.querySelector<HTMLElement>(
+    `:scope > div [data-slate-path='${JSON.stringify(path)}']`
+  )
   if (!node) {
     throw new Error(`Unable to find element at path: ${JSON.stringify(path)}`)
   }
@@ -58,15 +61,15 @@ export function getCurrentRange() {
   return null
 }
 
-export function selectionToDOMRange(editor: BaseEditor) {
+export function selectionToDOMRange(editor: BlockEditor<any, any>) {
   if (!editor.selection) return null
 
-  return slateRangeToDOMRange(editor.selection)
+  return slateRangeToDOMRange(editor.selection, editor.element)
 }
 
-export function slateRangeToDOMRange(range: Range) {
-  const anchor = getElementAtPath(range.anchor.path)
-  const focus = getElementAtPath(range.focus.path)
+export function slateRangeToDOMRange(range: Range, slateElement: HTMLElement) {
+  const anchor = getElementAtPath(range.anchor.path, slateElement)
+  const focus = getElementAtPath(range.focus.path, slateElement)
 
   const anchorNode = Array.from(anchor.childNodes).find(n => n.nodeType === Node.TEXT_NODE)
   const focusNode = Array.from(focus.childNodes).find(n => n.nodeType === Node.TEXT_NODE)

@@ -1,10 +1,9 @@
-import { Editor, Element, Range, Transforms } from "slate"
+import { Editor, Element, Path, Range, Text, Transforms } from "slate"
 
 import { copyFragment, cutFragment, pasteFragment } from "./clipboard"
 import { getCurrentRange, selectionToDOMRange } from "./dom"
 import { createEditor } from "./editor"
 
-import type { Path } from "slate"
 import type { SlateBlock } from "./block"
 import type { SlateLeaf } from "./leaf"
 import type { inferBlocksDescendant, SlateDescendant, SlateElement } from "./types"
@@ -34,6 +33,7 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
   const editor = createEditor<T, L>(blocks, leaf)
   editor.blocks = blocks
   editor.children = defaultValue
+  editor.element = element
 
   async function renderEditor() {
     const tree = h("div", renderTree(editor, editor.children as SlateDescendant[], [], leaf))
@@ -49,8 +49,15 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
     if (!nodeEl) return
 
     const node = Editor.node(editor, path)[0]
-
-    const html = await renderToString(renderElement(editor, node, path, leaf))
+    const nestedTree = Array.from(
+      Editor.levels(editor, {
+        at: Path.parent(path),
+        reverse: true,
+      })
+    ).map(entry => entry[0] as SlateElement<any, any>)
+    const html = await renderToString(
+      renderElement(editor, node as SlateDescendant, path, leaf, nestedTree)
+    )
 
     if (nodeEl.parentNode) {
       nodeEl.outerHTML = html
@@ -102,6 +109,10 @@ export function initSlate<const T extends readonly SlateBlock<any, any>[], L ext
     }
   }
   element.onbeforeinput = e => {
+    if (editor.selection && !Text.isText(Editor.node(editor, editor.selection)[0])) {
+      return
+    }
+
     e.preventDefault()
 
     const type = e.inputType
@@ -251,10 +262,11 @@ function renderTree(
   editor: ReturnType<typeof createEditor>,
   elements: SlateDescendant[],
   path: Path,
-  leaf: SlateLeaf<any>
+  leaf: SlateLeaf<any>,
+  nestedTree: SlateElement<any, any>[] = []
 ): (JSX.Element | null)[] {
   const children = elements.map((element, index) =>
-    renderElement(editor, element, [...path, index], leaf)
+    renderElement(editor, element, [...path, index], leaf, nestedTree)
   )
   return children
 }
@@ -263,10 +275,11 @@ function renderElement(
   editor: ReturnType<typeof createEditor>,
   element: SlateDescendant,
   path: Path,
-  leaf: SlateLeaf<any>
+  leaf: SlateLeaf<any>,
+  nestedTree: SlateElement<any, any>[]
 ): JSX.Element | null {
   if (Element.isElement(element)) {
-    const block = editor.blocks.find(b => "type" in element && b.id === element.type)
+    const block = editor.getElementBlock(element as SlateElement<any, any>, nestedTree)
 
     if (!block) return null
 
@@ -274,6 +287,7 @@ function renderElement(
       editor,
       element: element as any,
       path,
+      block,
       attributes: {
         "data-slate-node": "element",
         "data-slate-element": (element as SlateElement<any, any>).type,
@@ -282,7 +296,7 @@ function renderElement(
         "data-slate-path": JSON.stringify(path),
         contenteditable: editor.isVoid(element) ? false : undefined,
       },
-      children: renderTree(editor, element.children, path, leaf) as any,
+      children: renderTree(editor, element.children, path, leaf, [element, ...nestedTree]) as any,
     })
   }
   return leaf.render({

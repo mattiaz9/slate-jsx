@@ -217,6 +217,9 @@ export function createEditor<
 
     normalizeNode(entry, opts)
   }
+  editor.getElementBlock = (element: SlateElement<string>) => {
+    return editor.blocks.find(b => b.id === element.type)
+  }
 
   return editor
 }

@@ -20,6 +20,7 @@ export interface RenderElementProps<T extends SlateBlock<any, any>> {
   path: Path
   children: JSX.Element | string
   attributes: any
+  block: T
 }
 
 export interface SlateBlockOptions<Id extends string, Props> {
@@ -120,7 +121,7 @@ export type BlockBehaviour<T extends SlateBlock<any, any>> = Prettify<
              * This should always be defined, unless the action is `stop`.
              * The element is usually a paragraph, but it can be any block.
              */
-            withBlock: SlateBlock<any, any> | null
+            withBlock?: SlateBlock<any, any> | null
           })
       | ({
           /**
