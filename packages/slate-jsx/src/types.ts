@@ -12,7 +12,10 @@ export interface ElementBase {
 }
 
 export type SlateDescendant = SlateElement<string> | SlateText
-export type SlateElement<T extends string, Props = Record<string, never>> = ElementBase & {
+export type SlateElement<
+  T extends string,
+  Props extends Record<string, unknown> | unknown = unknown,
+> = ElementBase & {
   type: T
 } & Props
 export type SlateText<Props = Record<string, unknown>> = {

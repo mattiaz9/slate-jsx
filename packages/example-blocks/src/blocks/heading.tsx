@@ -1,5 +1,5 @@
 import { SlateBlock } from "@mattiaz9/slate-jsx"
-import { Element, Range } from "slate"
+import { Element, Range, Text } from "slate"
 
 import { Leaf } from "../leaf"
 import { ParagraphBlock } from "./paragraph"
@@ -37,7 +37,7 @@ export class HeadingBlock<Id extends "h1" | "h2" | "h3" | "h4" | "h5" | "h6"> ex
           withBlock: new ParagraphBlock(),
           when(ctx) {
             const selection = ctx.editor.selection
-            const text = ctx.element.children[0]?.text ?? ""
+            const text = Text.isText(ctx.element.children[0]) ? ctx.element.children[0].text : ""
             return (
               selection !== null &&
               Range.isCollapsed(selection) &&

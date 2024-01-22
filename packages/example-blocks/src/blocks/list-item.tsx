@@ -1,5 +1,5 @@
 import { SlateBlock } from "@mattiaz9/slate-jsx"
-import { Element, Range, Transforms } from "slate"
+import { Element, Range, Text, Transforms } from "slate"
 
 import { Leaf } from "../leaf"
 import { ListBlock } from "./list"
@@ -35,7 +35,12 @@ export class ListItemBlock extends SlateBlock<"li", { level: number }> {
                 Element.isElement(entry) ? entry.children.filter(c => ListItemBlock.assert(c)) : []
               ).length === 1
             // check if the current list item is empty
-            return !isOnlyChild && element.children.length === 1 && element.children[0].text === ""
+            return (
+              !isOnlyChild &&
+              element.children.length === 1 &&
+              Text.isText(element.children[0]) &&
+              element.children[0].text === ""
+            )
           },
           target: ({ tree }) => {
             // the root list block
@@ -55,7 +60,12 @@ export class ListItemBlock extends SlateBlock<"li", { level: number }> {
                 ListBlock.assert(entry) ? entry.children.filter(c => ListItemBlock.assert(c)) : []
               ).length === 1
             // check if the current list item is empty
-            return isOnlyChild && element.children.length === 1 && element.children[0].text === ""
+            return (
+              isOnlyChild &&
+              element.children.length === 1 &&
+              Text.isText(element.children[0]) &&
+              element.children[0].text === ""
+            )
           },
           target: ({ tree }) => {
             // the root list block
